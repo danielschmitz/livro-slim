@@ -1,0 +1,11 @@
+RewriteEngine On
+
+#
+# O RewriteBase abaixo deve ser alterado de acordo
+# com o seu usuário no Linux e o caminho correto
+# até o projeto criado
+#
+RewriteBase /~daniel/livro-slim/helloworld
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [QSA,L]
