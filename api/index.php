@@ -1,21 +1,30 @@
 <?php
-session_start();
+session_start(); //iniciando a sessão do php
 
+//incuindo os arquivos de configuração e acesso a banco
 include "config.php";
 include "DB.php";
 
+// incluindo as bibliotecas do composer
 require 'vendor/autoload.php';
-$app = new \Slim\Slim(array(
-    'debug' => true
-     ));
 
+//Instanciando $app como uma classe Slim
+$app = new \Slim\Slim(array(
+    'debug' => false //debug é false para renderizar  erros corretamente
+));
+
+//Todas as nossas respostas serão JSON
 $app->contentType("application/json");
 
+//Caso ocorra algum erro na aplicação (Excepyion), 
+//  essa função será executada e um erro padrão em JSON
+//     será retornado ao cliente
 $app->error(function ( Exception $e = null) use ($app) {
          echo '{"error":{"text":"'. $e->getMessage() .'"}}';
         });
 
-//GET pode possuir um parametro na URL
+// REQUISICAO
+// GET pode possuir um parametro na URL
 $app->get('/:controller/:action(/:parameter)', function ($controller, $action, $parameter = null) use($app) {
 
             include_once "classes/{$controller}.php";
@@ -24,7 +33,8 @@ $app->get('/:controller/:action(/:parameter)', function ($controller, $action, $
             echo '{"result":' . json_encode($retorno) . '}';
         });
 
-//POST não possui parâmetros na URL, e sim na requisição
+// REQUISICAO
+// POST não possui parâmetros na URL, e sim na requisição
 $app->post('/:controller/:action', function ($controller, $action) use ($app) {
 
             $request = json_decode(\Slim\Slim::getInstance()->request()->getBody());
@@ -34,7 +44,8 @@ $app->post('/:controller/:action', function ($controller, $action) use ($app) {
              echo '{"result":' . json_encode($retorno) . '}';
         });
 
-//PUT não possui parâmetros na URL, e sim na requisição
+// REQUISICAO
+// PUT não possui parâmetros na URL, e sim na requisição
 $app->put('/:controller/:action', function ($controller, $action) use ($app) {
 
             $request = json_decode(\Slim\Slim::getInstance()->request()->getBody());
@@ -44,7 +55,8 @@ $app->put('/:controller/:action', function ($controller, $action) use ($app) {
              echo '{"result":' . json_encode($retorno) . '}';
         });
 
-//PUT não possui parâmetros na URL, e sim na requisição
+// REQUISICAO
+// DELETE não possui parâmetros na URL, e sim na requisição
 $app->delete('/:controller/:action', function ($controller, $action) use ($app) {
 
             $request = json_decode(\Slim\Slim::getInstance()->request()->getBody());
