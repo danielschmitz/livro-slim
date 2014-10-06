@@ -9,4 +9,8 @@ class Produto{
 		throw new Exception("Erro de teste");
 	}
 
+	public function post_teste($produto)
+	{
+		return $produto->nome;
+	}
 }
