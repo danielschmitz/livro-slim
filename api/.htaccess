@@ -1,6 +1,7 @@
 RewriteEngine On
 
-RewriteBase /~daniel/livro-slim/api/
+#RewriteBase /~daniel/livro-slim/api/
+rewriteBase /php/livro-slim/api
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ index.php [QSA,L]
