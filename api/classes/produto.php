@@ -26,6 +26,7 @@ class Produto{
 		$stmtVerificaProduto->bindValue("nome", $produto->nome);
 		$stmtVerificaProduto->execute();
 		$produtoEncontrado = $stmtVerificaProduto->fetch();
+	
 		if ($produtoEncontrado)
             			throw new Exception("Este produto '{$produtoEncontrado->nome}' já existe.");
 
@@ -39,6 +40,55 @@ class Produto{
         		return $produto;
 
 	}
+
+	public function get_listar($id){
+
+		$sql = "SELECT id,nome FROM Produtos";
+
+		if ($id!=null)
+		{
+			$sql .= " WHERE id=:id";
+		}
+
+		$stmt = DB::prepare($sql);
+
+		if ($id!=null)
+		{
+			$stmt->bindValue("id", $id);
+		}
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+	}
+
+	public function put_editar($produto){
+
+		if(empty($produto->id))
+			throw new Exception("Identificador do produto não encontrado");
+
+		//Verificação simpĺes para o nome do produto nao ser o mesmo
+		$sql = "SELECT id,nome FROM Produtos WHERE nome=:nome";
+		$stmt = DB::prepare($sql);
+		$stmt->bindParam("nome", $produto->nome);
+		$stmt->execute();
+		$produtoEncontrado = $stmt->fetchAll();
+		if ($produtoEncontrado)
+		{
+			throw new Exception("Produto existente");
+		}
+
+		// Editando o produto
+		$sql = "UPDATE Produtos SET nome=:nome WHERE id=:id";
+		$stmt = DB::prepare($sql);
+		$stmt->bindParam("nome", $produto->nome);
+		$stmt->bindParam("id", $produto->id);
+		$stmt->execute();
+
+		return $produto;
+
+	}
+
 
 
 
