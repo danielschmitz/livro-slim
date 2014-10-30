@@ -73,7 +73,7 @@ class Produto{
 		$stmt->bindParam("id", $produto->id);
 		$stmt->execute();
 		$produtoEncontrado = $stmt->fetchAll();
-		if (!$produtoEncontrado)
+		if ($produtoEncontrado==null)
 		{
 			throw new Exception("Produto não cadastrado");
 		}
@@ -98,10 +98,37 @@ class Produto{
 		$stmt->execute();
 
 		return $produto;
-		
-		
 
 	}
+	
+	public function delete_remover($produto){
+
+		if(empty($produto->id))
+			throw new Exception("Identificador do produto não encontrado");
+		
+		//Verificação simpĺes para verificar se o id existe
+		$sql = "SELECT * FROM Produtos WHERE id=:id";
+		$stmt = DB::prepare($sql);
+		$stmt->bindParam("id", $produto->id);
+		$stmt->execute();
+		$produtoEncontrado = $stmt->fetchAll();
+		if ($produtoEncontrado==null)
+		{
+			throw new Exception("Produto não cadastrado");
+		}
+		
+
+		// Editando o produto
+		$sql = "DELETE FROM Produtos WHERE id=:id";
+		$stmt = DB::prepare($sql);
+		$stmt->bindParam("id", $produto->id);
+		$stmt->execute();
+
+		return true;
+
+	}
+	
+	
 
 
 
