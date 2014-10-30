@@ -14,7 +14,7 @@ class Produto{
 		return $produto->nome;
 	}
 
-	public function post_novo($produto){
+	public function post_inserir($produto){
 
 		//Verifica se nome do produto foi preenchido
 		if (empty($produto->nome))
@@ -66,6 +66,18 @@ class Produto{
 
 		if(empty($produto->id))
 			throw new Exception("Identificador do produto não encontrado");
+		
+		//Verificação simpĺes para verificar se o id existe
+		$sql = "SELECT * FROM Produtos WHERE id=:id";
+		$stmt = DB::prepare($sql);
+		$stmt->bindParam("id", $produto->id);
+		$stmt->execute();
+		$produtoEncontrado = $stmt->fetchAll();
+		if (!$produtoEncontrado)
+		{
+			throw new Exception("Produto não cadastrado");
+		}
+		
 
 		//Verificação simpĺes para o nome do produto nao ser o mesmo
 		$sql = "SELECT id,nome FROM Produtos WHERE nome=:nome";
@@ -86,6 +98,8 @@ class Produto{
 		$stmt->execute();
 
 		return $produto;
+		
+		
 
 	}
 
