@@ -106,7 +106,7 @@ class Produto{
 		if(empty($produto->id))
 			throw new Exception("Identificador do produto não encontrado");
 		
-		//Verificação simpĺes para verificar se o id existe
+		//Verificação simples para verificar se o id existe
 		$sql = "SELECT * FROM Produtos WHERE id=:id";
 		$stmt = DB::prepare($sql);
 		$stmt->bindParam("id", $produto->id);
