@@ -15,11 +15,84 @@ $("#produtos").on("click","#edit", function() {
 
     //Pego o id da linha clicada, o id do produto
     var id = $(this).attr("data-id");
+    //console.log(id);
     
+     $.ajax({
+        type: "get",
+        url: serverURL + "produto/listar/" + id,
+        dataType: "json",
+        success: function(data) {
+
+            var produto = data.result;
+            //console.log(produto);
+            $("#inputId").val(produto.id);
+            $("#inputNome").val(produto.nome);
+            
+          
+        },
+        error: function(data){
+            showError(data);
+        }
+    });
+
+});
+
+$("#buttonNovo").click(function() {
+    $("#inputId").val("");
+    $("#inputNome").val("").focus();
+});
     
     
 
+$("#salvar").click(function() {
+    //console.log("click salvar");
+    var id = $("#inputId").val();
+    
+    //objeto que será repassado a API
+    var produto = JSON.stringify({
+            id: $("#inputId").val(),
+            nome: $("#inputNome").val()
+        });
+  
+    if (id)
+    {
+        $.ajax({
+            type: "put",
+            url: serverURL + "produto/editar",
+            dataType: "json",
+            data: produto,
+            success: function(result) {
+                $("#inputId").val("");
+                $("#inputNome").val("");
+                listarProdutos();
+            },
+            error: function(data){
+                showError(data);
+            }
+        });
+    }
+    else
+    {
+        console.log("novo produto");
+        $.ajax({
+            type: "post",
+            url: serverURL + "produto/inserir",
+            dataType: "json",
+            data: produto,
+            success: function(result) {
+                $("#inputId").val("");
+                $("#inputNome").val("");
+                listarProdutos();
+            },
+            error: function(data){
+                showError(data);
+            }
+        });
+    }
+    
+    
 });
+
 
 
 
