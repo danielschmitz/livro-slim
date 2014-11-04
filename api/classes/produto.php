@@ -59,6 +59,12 @@ class Produto{
 
 		$stmt->execute();
 
+		//Se houver um ID, retorna um objeto, ao invés 
+		// de um array de objetos
+		if ($id!=null)
+		{
+			return $stmt->fetchObject();
+		}
 		return $stmt->fetchAll();
 	}
 
