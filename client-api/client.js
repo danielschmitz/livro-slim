@@ -3,20 +3,25 @@
 var serverURL = "https://demo-project-c9-danielschmitz.c9.io/php/livro-slim/api/";
 
 
+
 //Código executado quando o jquery/pagina estiverem carregados (start)
 $( document ).ready(function() {
-      listarProdutos();
+    listarProdutos();
 });
 
+  
 //Código para adicionar um observador ao link de editar Produtos
-$("#editar").live("click", function() {
+$("#produtos").on("click","#edit", function() {
 
-    //Pego o id da linha clicada
+    //Pego o id da linha clicada, o id do produto
     var id = $(this).attr("data-id");
     
-    alert("id");
+    
+    
 
 });
+
+
 
 
 // FUNCOES
@@ -61,7 +66,7 @@ function listarProdutos(){
 
                 var row = "<tr>"
                         + "<td>" + produto.id
-                        + "</td><td><a id='editar' href='#' data-id='" + produto.id + "'>" + produto.nome + "</a>"
+                        + "</td><td><a id='edit' href='#' data-id='" + produto.id + "'>" + produto.nome + "</a>"
                         
                         + "</td></tr>";
                 $("#produtos > tbody:last").append(row);
