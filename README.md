@@ -5,4 +5,4 @@ Este é o código fonte do livro Dominando Slim Framework (https://leanpub.com/l
 
 Lembre-se que apenas copiar/colar o código não lhe deixará um melhor programador. Para aprender é preciso escrever o código e conhecer cada linha do que se está escrevendo.
 
-Qualquer dúvida entre em contato conosco: vendas at danielschmitz.com.br
+Qualquer dúvida entre em contato conosco: danieljfa at gmail dot com
